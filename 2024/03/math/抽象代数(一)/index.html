@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"llittlehanhan.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":"fasle","scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="这部分是与群相关的内容">
+<meta property="og:type" content="article">
+<meta property="og:title" content="抽象代数（一）">
+<meta property="og:url" content="https://llittlehanhan.github.io/2024/03/math/%E6%8A%BD%E8%B1%A1%E4%BB%A3%E6%95%B0(%E4%B8%80)/index.html">
+<meta property="og:site_name" content="Hanhan&#39;s Blog">
+<meta property="og:description" content="这部分是与群相关的内容">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-03-28T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-04-07T11:51:51.200Z">
+<meta property="article:author" content="Hanhan">
+<meta property="article:tag" content="math">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://llittlehanhan.github.io/2024/03/math/%E6%8A%BD%E8%B1%A1%E4%BB%A3%E6%95%B0(%E4%B8%80)/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>抽象代数（一） | Hanhan's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hanhan's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">11</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">60</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://llittlehanhan.github.io/2024/03/math/%E6%8A%BD%E8%B1%A1%E4%BB%A3%E6%95%B0(%E4%B8%80)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/me.jpg">
+      <meta itemprop="name" content="Hanhan">
+      <meta itemprop="description" content="凡是过往，皆为序章">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hanhan's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          抽象代数（一）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-03-29 00:00:00" itemprop="dateCreated datePublished" datetime="2024-03-29T00:00:00+08:00">2024-03-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-04-07 19:51:51" itemprop="dateModified" datetime="2024-04-07T19:51:51+08:00">2024-04-07</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>913</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>这部分是与群相关的内容</p>
+<span id="more"></span>
+
+<h2 id="群（G，-）"><a href="#群（G，-）" class="headerlink" title="群（G，*）"></a>群（G，*）</h2><ol>
+<li>封闭性</li>
+<li>结合律</li>
+<li>单位元</li>
+<li>逆元<blockquote>
+<p>注意没有交换律</p>
+</blockquote>
+</li>
+</ol>
+<p>性质：</p>
+<ul>
+<li>有限群&amp;无限群</li>
+<li>群里的单位元唯一</li>
+<li>元素的逆元唯一</li>
+</ul>
+<h2 id="阿贝尔群"><a href="#阿贝尔群" class="headerlink" title="阿贝尔群"></a>阿贝尔群</h2><p>$G是阿贝尔群，任意a，b属于G，有(a<em>b)^t &#x3D; a^t</em>b^t$</p>
+<h2 id="子群"><a href="#子群" class="headerlink" title="子群"></a>子群</h2><p>$有群（G，<em>），集合H是G的非空子集，且（H，</em>）也是一个群$</p>
+<p>判断子群：</p>
+<ol>
+<li>任意a，b属于H，有$a*b^{-1} \in H$，则H是G的子群</li>
+<li>H是有限集，且在运算*上满足封闭性（即有限+封闭）</li>
+</ol>
+<blockquote>
+<p>模n加法群都是循环群<br>模n乘法群不一定是循环群，见原根<br>群&gt;阿贝尔群&gt;循环群</p>
+</blockquote>
+<h2 id="构造子群"><a href="#构造子群" class="headerlink" title="构造子群"></a>构造子群</h2><p>以阿贝尔群为基础构造子群</p>
+<ol>
+<li>$G^m$</li>
+<li>$G{m} &#x3D; { a \in G | a^m &#x3D; e }$   <blockquote>
+<p>这种方式是G中元素a到单位元的距离</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="陪集"><a href="#陪集" class="headerlink" title="陪集"></a>陪集</h2><blockquote>
+<p>可以用（模n）整数加法群为例，模n乘法群有点抽象</p>
+</blockquote>
+<p>$H是G的子群，a \in G 有 aH &#x3D; {a<em>h | h\in H}或Ha &#x3D; {h</em>a | h\in H}$  </p>
+<ol>
+<li>$a \in [a]_H$</li>
+<li>$a \in H \Leftrightarrow [a]_H &#x3D; H$</li>
+<li>$[a]_H &#x3D; [b]_H \Leftrightarrow a^{-1}*b \in H$</li>
+</ol>
+<h2 id="拉格朗日定理"><a href="#拉格朗日定理" class="headerlink" title="拉格朗日定理"></a>拉格朗日定理</h2><p>$G是有限群，H是G的任意子群，则 |H|是|G|的因子$</p>
+<h2 id="正规子群"><a href="#正规子群" class="headerlink" title="正规子群"></a>正规子群</h2><p>一个子群的左右陪集相等<br>正规子群不一定是阿贝尔群,阿贝尔群一定是正规子群</p>
+<h2 id="商群"><a href="#商群" class="headerlink" title="商群"></a>商群</h2><p>正规子群构造出的所有陪集的集合<br>$G&#x2F;N &#x3D; {[a]_N | a \in G}、二元运算[a]_N*[b]_N &#x3D; [a*b]_N$</p>
+<h2 id="群同态"><a href="#群同态" class="headerlink" title="群同态"></a>群同态</h2><p>$f(a*b)&#x3D;f(a) \bigotimes f(b)$</p>
+<ul>
+<li>同态核：原像映射成单位元的元素</li>
+<li>同态像：原像映射成新像，新像中的元素</li>
+</ul>
+<h2 id="群同构"><a href="#群同构" class="headerlink" title="群同构"></a>群同构</h2><p>同态映射可以是一对一（单射）或多对一、或满射<br>群同构是单射加满射，即完全相同</p>
+<p>第一同构定理<br>$G&#x2F;Kerf \cong Imf$</p>
+<h2 id="循环群和阶"><a href="#循环群和阶" class="headerlink" title="循环群和阶"></a>循环群和阶</h2><p>阶可以是有限阶和无限阶<br>群的阶：群中元素的个数<br>元素的阶：$a^m&#x3D;e$的最小正整数m<br>循环群的阶：有生成元g，g的阶是n，即$g^n&#x3D;e$，群中元素个数为n</p>
+<ol>
+<li>正整数d|n，n阶有限循环群有唯一d阶子群$&lt;g^{\frac{n}{d}}&gt;$</li>
+<li>n阶有限循环群$<g>$，$g^k$的阶是$\frac{n}{gcd(n,k)}$<blockquote>
+<p>假设$g^k的阶是m，有g^{km}&#x3D;e，即n|km，即km要是k和n的最小公倍数km&#x3D;lcm(n,k)&#x3D;\frac{n}{gcd(n,k)}$</p>
+</blockquote>
+</li>
+<li>由2当k与n互素，$g^k$的阶为n，故n阶循环群有$\Phi(n)$个生成元</li>
+<li>素数阶的群一定是有限循环群<blockquote>
+<p>元素的阶一定是群的阶的因子，因为某个元素a，$a^1,a^2…$可以生成一个子群，之后由拉格朗日定理可知</p>
+</blockquote>
+</li>
+<li>G是n阶有限循环群，d|n，G中的d阶元素有$\Phi(d)$个<blockquote>
+<p>1+3</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="循环群的同构"><a href="#循环群的同构" class="headerlink" title="循环群的同构"></a>循环群的同构</h2><ul>
+<li>无限循环群同构于$Z$</li>
+<li>有限循环群同构于$Z_n$</li>
+</ul>
+<h2 id="原根"><a href="#原根" class="headerlink" title="原根"></a>原根</h2><blockquote>
+<p>将循环群的性质具体到群$Z_n^*$</p>
+</blockquote>
+<p>$Z_n^*$的生成元g，$g^{\Phi(n)}\equiv 1 \pmod n$<br>原根存在条件，p是奇素数，e是正整数，$n&#x3D;1,2,4,p^e,2p^e$<br></h><br>找原根的方法：<br>对$a^{\Phi(n)} \equiv e \pmod n$，$\Phi(n)&#x3D;p_1^{e_1}p_2^{e_2}…p_r^{e_r}$<br>若存在$d|\Phi(n)$使$a^d \equiv e \pmod n$<br>一定有一个素数p，$d|\frac{\Phi(n)}{p}$，且$a^{\frac{\Phi(n)}{p}} \equiv e \pmod n$<br>因此将$\Phi(n)$质因数分解，之后判断每一个p是否有$a^{\frac{\Phi(n)}{p}} \equiv e \pmod n$，若没有则是生成元</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Hanhan
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://llittlehanhan.github.io/2024/03/math/%E6%8A%BD%E8%B1%A1%E4%BB%A3%E6%95%B0(%E4%B8%80)/" title="抽象代数（一）">https://llittlehanhan.github.io/2024/03/math/抽象代数(一)/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/math/" rel="tag"><i class="fa fa-tag"></i> math</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/03/math/%E6%8A%BD%E8%B1%A1%E4%BB%A3%E6%95%B0(%E4%BA%8C)/" rel="prev" title="抽象代数（二）">
+      <i class="fa fa-chevron-left"></i> 抽象代数（二）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/04/math/%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF/" rel="next" title="椭圆曲线">
+      椭圆曲线 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BE%A4%EF%BC%88G%EF%BC%8C-%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">群（G，*）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%98%BF%E8%B4%9D%E5%B0%94%E7%BE%A4"><span class="nav-number">2.</span> <span class="nav-text">阿贝尔群</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%90%E7%BE%A4"><span class="nav-number">3.</span> <span class="nav-text">子群</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%84%E9%80%A0%E5%AD%90%E7%BE%A4"><span class="nav-number">4.</span> <span class="nav-text">构造子群</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%99%AA%E9%9B%86"><span class="nav-number">5.</span> <span class="nav-text">陪集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E5%AE%9A%E7%90%86"><span class="nav-number">6.</span> <span class="nav-text">拉格朗日定理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E8%A7%84%E5%AD%90%E7%BE%A4"><span class="nav-number">7.</span> <span class="nav-text">正规子群</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%95%86%E7%BE%A4"><span class="nav-number">8.</span> <span class="nav-text">商群</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BE%A4%E5%90%8C%E6%80%81"><span class="nav-number">9.</span> <span class="nav-text">群同态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BE%A4%E5%90%8C%E6%9E%84"><span class="nav-number">10.</span> <span class="nav-text">群同构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AA%E7%8E%AF%E7%BE%A4%E5%92%8C%E9%98%B6"><span class="nav-number">11.</span> <span class="nav-text">循环群和阶</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AA%E7%8E%AF%E7%BE%A4%E7%9A%84%E5%90%8C%E6%9E%84"><span class="nav-number">12.</span> <span class="nav-text">循环群的同构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E6%A0%B9"><span class="nav-number">13.</span> <span class="nav-text">原根</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Hanhan"
+      src="/images/me.jpg">
+  <p class="site-author-name" itemprop="name">Hanhan</p>
+  <div class="site-description" itemprop="description">凡是过往，皆为序章</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">60</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LLittleHanhan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LLittleHanhan" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hanhan</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">23k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:24</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"llittlehanhan.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":"fasle","scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="了解rust的package,crate,module,看完就可以看大点项目了">
+<meta property="og:type" content="article">
+<meta property="og:title" content="rust(七)项目、包、模块">
+<meta property="og:url" content="https://llittlehanhan.github.io/2024/03/rust/rust(%E4%B8%83)%E9%A1%B9%E7%9B%AE%E3%80%81%E5%8C%85%E3%80%81%E6%A8%A1%E5%9D%97/index.html">
+<meta property="og:site_name" content="Hanhan&#39;s Blog">
+<meta property="og:description" content="了解rust的package,crate,module,看完就可以看大点项目了">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-03-03T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-03-27T12:03:47.305Z">
+<meta property="article:author" content="Hanhan">
+<meta property="article:tag" content="rust">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://llittlehanhan.github.io/2024/03/rust/rust(%E4%B8%83)%E9%A1%B9%E7%9B%AE%E3%80%81%E5%8C%85%E3%80%81%E6%A8%A1%E5%9D%97/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>rust(七)项目、包、模块 | Hanhan's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hanhan's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">11</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">60</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://llittlehanhan.github.io/2024/03/rust/rust(%E4%B8%83)%E9%A1%B9%E7%9B%AE%E3%80%81%E5%8C%85%E3%80%81%E6%A8%A1%E5%9D%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/me.jpg">
+      <meta itemprop="name" content="Hanhan">
+      <meta itemprop="description" content="凡是过往，皆为序章">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hanhan's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          rust(七)项目、包、模块
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-03-04 00:00:00" itemprop="dateCreated datePublished" datetime="2024-03-04T00:00:00+08:00">2024-03-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-03-27 20:03:47" itemprop="dateModified" datetime="2024-03-27T20:03:47+08:00">2024-03-27</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>967</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>了解rust的package,crate,module,看完就可以看大点项目了</p>
+<span id="more"></span>
+
+<ol>
+<li>package &gt; crate &gt; module</li>
+<li>一个项目就是一个package，项目中可能会有多个crate，一个crate中会有多个module</li>
+</ol>
+<h2 id="package"><a href="#package" class="headerlink" title="package"></a>package</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">cargo new project # 创建一个package，里面有一个二进制类型的crate</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--project</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">  --cargo.toml</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">  --src</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">    --main.rs</span></span><br><span class="line"></span><br><span class="line">cargo new lib --lib # 创建一个package，里面有一个lib类型的crate</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--lib</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">  --cargo.toml</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">  --src</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">    --lib.rs</span> </span><br></pre></td></tr></table></figure>
+
+
+<h2 id="crate"><a href="#crate" class="headerlink" title="crate"></a>crate</h2><ul>
+<li>二进制类型的crate可以有多个可执行文件<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--project</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">  --cargo.toml</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">  --src</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">    --main.rs</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">    --bin</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">      --test.rs</span></span><br><span class="line">cargo run --bin test.rs</span><br></pre></td></tr></table></figure></li>
+<li>lib类型的crate只能有一个lib.rs文件</li>
+<li>lib类型和二进制类型可以共存</li>
+</ul>
+<h2 id="module"><a href="#module" class="headerlink" title="module"></a>module</h2><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// --lib</span></span><br><span class="line"><span class="comment">//   --cargo.toml</span></span><br><span class="line"><span class="comment">//   --src</span></span><br><span class="line"><span class="comment">//     --lib.rs</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// lib.rs</span></span><br><span class="line"><span class="keyword">mod</span> front_of_house &#123;</span><br><span class="line">    <span class="keyword">mod</span> hosting &#123;</span><br><span class="line">        <span class="keyword">fn</span> <span class="title function_">add_to_waitlist</span>() &#123;&#125;</span><br><span class="line">        <span class="keyword">fn</span> <span class="title function_">seat_at_table</span>() &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">mod</span> serving &#123;</span><br><span class="line">        <span class="keyword">fn</span> <span class="title function_">take_order</span>() &#123;&#125;</span><br><span class="line">        <span class="keyword">fn</span> <span class="title function_">serve_order</span>() &#123;&#125;</span><br><span class="line">        <span class="keyword">fn</span> <span class="title function_">take_payment</span>() &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">eat_at_restaurant</span>() &#123;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">crate</span><br><span class="line"> └── eat_at_restaurant()</span><br><span class="line"> └── front_of_house</span><br><span class="line">     ├── hosting</span><br><span class="line">     │   ├── add_to_waitlist()</span><br><span class="line">     │   └── seat_at_table()</span><br><span class="line">     └── serving</span><br><span class="line">         ├── take_order()</span><br><span class="line">         ├── serve_order()</span><br><span class="line">         └── take_payment()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>引用方式<ul>
+<li>绝对路径crate：<code>crate::front_of_house::hosting::add_to_waitlist()</code></li>
+<li>相对路径self和super</li>
+</ul>
+</li>
+<li>把module视作和函数一样的实体，同级可见，父无法访问子，子可以访问父</li>
+<li>使用pub访问控制，注意pub只能控制当前的东西，不能连带控制内部</li>
+</ul>
+<h2 id="文件和module"><a href="#文件和module" class="headerlink" title="文件和module"></a>文件和module</h2><ul>
+<li>本质上一个crate就一个文件，拆散后用<code>mod xxx;</code>连接</li>
+<li>使用方法和上小节一样<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// --src</span></span><br><span class="line"><span class="comment">//   --main.rs</span></span><br><span class="line"><span class="comment">//   --test.rs</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//main.rs</span></span><br><span class="line"><span class="keyword">mod</span> test; <span class="comment">//相当于c中的include</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>下面是复杂的情况，以目前所看的代码为例</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// --src</span></span><br><span class="line"><span class="comment">//   --lib.rs</span></span><br><span class="line"><span class="comment">//   --poseidon/</span></span><br><span class="line"><span class="comment">//     --mod.rs</span></span><br><span class="line"><span class="comment">//     --matrix.rs</span></span><br><span class="line"><span class="comment">//     --... </span></span><br><span class="line"></span><br><span class="line"><span class="comment">//mod.rs</span></span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">mod</span> matrix;</span><br></pre></td></tr></table></figure>
+
+<h2 id="use"><a href="#use" class="headerlink" title="use"></a>use</h2><ul>
+<li>引入范围：<ul>
+<li>本crate中的mod</li>
+<li>第三方包，需要在cargo.toml中更改[dependencies]</li>
+</ul>
+</li>
+<li>相当于给目标起个别名，方便使用，具体是引用模块还是直接引用函数，需要具体情况具体分析</li>
+<li>命名冲突问题  <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> std::fmt::<span class="type">Result</span>;</span><br><span class="line"><span class="keyword">use</span> std::io::<span class="type">Result</span> <span class="keyword">as</span> IoResult;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">function1</span>() <span class="punctuation">-&gt;</span> <span class="type">Result</span> &#123;</span><br><span class="line">    <span class="comment">// --snip--</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">function2</span>() <span class="punctuation">-&gt;</span> IoResult&lt;()&gt; &#123;</span><br><span class="line">    <span class="comment">// --snip--</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><code>&#123;&#125;</code>或<code>*</code>引用多个目标</li>
+</ul>
+<h2 id="使用use的可见性问题"><a href="#使用use的可见性问题" class="headerlink" title="使用use的可见性问题"></a>使用use的可见性问题</h2><p>这个完全可以让编译器帮忙纠错</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 一个名为 `my_mod` 的模块</span></span><br><span class="line"><span class="keyword">mod</span> my_mod &#123;</span><br><span class="line">    <span class="comment">// 模块中的项默认具有私有的可见性</span></span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">private_function</span>() &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;called `my_mod::private_function()`&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用 `pub` 修饰语来改变默认可见性。</span></span><br><span class="line">    <span class="keyword">pub</span> <span class="keyword">fn</span> <span class="title function_">function</span>() &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;called `my_mod::function()`&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 在同一模块中，项可以访问其它项，即使它是私有的。</span></span><br><span class="line">    <span class="keyword">pub</span> <span class="keyword">fn</span> <span class="title function_">indirect_access</span>() &#123;</span><br><span class="line">        <span class="built_in">print!</span>(<span class="string">&quot;called `my_mod::indirect_access()`, that\n&gt; &quot;</span>);</span><br><span class="line">        <span class="title function_ invoke__">private_function</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 模块也可以嵌套</span></span><br><span class="line">    <span class="keyword">pub</span> <span class="keyword">mod</span> nested &#123;</span><br><span class="line">        <span class="keyword">pub</span> <span class="keyword">fn</span> <span class="title function_">function</span>() &#123;</span><br><span class="line">            <span class="built_in">println!</span>(<span class="string">&quot;called `my_mod::nested::function()`&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">#[allow(dead_code)]</span></span><br><span class="line">        <span class="keyword">fn</span> <span class="title function_">private_function</span>() &#123;</span><br><span class="line">            <span class="built_in">println!</span>(<span class="string">&quot;called `my_mod::nested::private_function()`&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 使用 `pub(in path)` 语法定义的函数只在给定的路径中可见。</span></span><br><span class="line">        <span class="comment">// `path` 必须是父模块（parent module）或祖先模块（ancestor module）</span></span><br><span class="line">        <span class="title function_ invoke__">pub</span>(<span class="keyword">in</span> crate::my_mod) <span class="keyword">fn</span> <span class="title function_">public_function_in_my_mod</span>() &#123;</span><br><span class="line">            <span class="built_in">print!</span>(<span class="string">&quot;called `my_mod::nested::public_function_in_my_mod()`, that\n &gt; &quot;</span>);</span><br><span class="line">            <span class="title function_ invoke__">public_function_in_nested</span>()</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 使用 `pub(self)` 语法定义的函数则只在当前模块中可见。</span></span><br><span class="line">        <span class="title function_ invoke__">pub</span>(<span class="keyword">self</span>) <span class="keyword">fn</span> <span class="title function_">public_function_in_nested</span>() &#123;</span><br><span class="line">            <span class="built_in">println!</span>(<span class="string">&quot;called `my_mod::nested::public_function_in_nested&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 使用 `pub(super)` 语法定义的函数只在父模块中可见。</span></span><br><span class="line">        <span class="title function_ invoke__">pub</span>(<span class="keyword">super</span>) <span class="keyword">fn</span> <span class="title function_">public_function_in_super_mod</span>() &#123;</span><br><span class="line">            <span class="built_in">println!</span>(<span class="string">&quot;called my_mod::nested::public_function_in_super_mod&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">pub</span> <span class="keyword">fn</span> <span class="title function_">call_public_function_in_my_mod</span>() &#123;</span><br><span class="line">        <span class="built_in">print!</span>(<span class="string">&quot;called `my_mod::call_public_funcion_in_my_mod()`, that\n&gt; &quot;</span>);</span><br><span class="line">        nested::<span class="title function_ invoke__">public_function_in_my_mod</span>();</span><br><span class="line">        <span class="built_in">print!</span>(<span class="string">&quot;&gt; &quot;</span>);</span><br><span class="line">        nested::<span class="title function_ invoke__">public_function_in_super_mod</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// `pub(crate)` 使得函数只在当前包中可见</span></span><br><span class="line">    <span class="title function_ invoke__">pub</span>(<span class="keyword">crate</span>) <span class="keyword">fn</span> <span class="title function_">public_function_in_crate</span>() &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;called `my_mod::public_function_in_crate()&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 嵌套模块的可见性遵循相同的规则</span></span><br><span class="line">    <span class="keyword">mod</span> private_nested &#123;</span><br><span class="line">        <span class="meta">#[allow(dead_code)]</span></span><br><span class="line">        <span class="keyword">pub</span> <span class="keyword">fn</span> <span class="title function_">function</span>() &#123;</span><br><span class="line">            <span class="built_in">println!</span>(<span class="string">&quot;called `my_mod::private_nested::function()`&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">function</span>() &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;called `function()`&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="comment">// 模块机制消除了相同名字的项之间的歧义。</span></span><br><span class="line">    <span class="title function_ invoke__">function</span>();</span><br><span class="line">    my_mod::<span class="title function_ invoke__">function</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 公有项，包括嵌套模块内的，都可以在父模块外部访问。</span></span><br><span class="line">    my_mod::<span class="title function_ invoke__">indirect_access</span>();</span><br><span class="line">    my_mod::nested::<span class="title function_ invoke__">function</span>();</span><br><span class="line">    my_mod::<span class="title function_ invoke__">call_public_function_in_my_mod</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// pub(crate) 项可以在同一个 crate 中的任何地方访问</span></span><br><span class="line">    my_mod::<span class="title function_ invoke__">public_function_in_crate</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// pub(in path) 项只能在指定的模块中访问</span></span><br><span class="line">    <span class="comment">// 报错！函数 `public_function_in_my_mod` 是私有的</span></span><br><span class="line">    <span class="comment">//my_mod::nested::public_function_in_my_mod();</span></span><br><span class="line">    <span class="comment">// 试一试 ^ 取消该行的注释</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 模块的私有项不能直接访问，即便它是嵌套在公有模块内部的</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 报错！`private_function` 是私有的</span></span><br><span class="line">    <span class="comment">//my_mod::private_function();</span></span><br><span class="line">    <span class="comment">// 试一试 ^ 取消此行注释</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 报错！`private_function` 是私有的</span></span><br><span class="line">    <span class="comment">//my_mod::nested::private_function();</span></span><br><span class="line">    <span class="comment">// 试一试 ^ 取消此行的注释</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 报错！ `private_nested` 是私有的</span></span><br><span class="line">    <span class="comment">//my_mod::private_nested::function();</span></span><br><span class="line">    <span class="comment">// 试一试 ^ 取消此行的注释</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>限制可见性语法</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_ invoke__">pub</span>(<span class="keyword">crate</span>)</span><br><span class="line"><span class="title function_ invoke__">pub</span>(<span class="keyword">in</span> crate::a)</span><br><span class="line"><span class="title function_ invoke__">pub</span>(<span class="keyword">self</span>)</span><br><span class="line"><span class="title function_ invoke__">pub</span>(<span class="keyword">super</span>)</span><br></pre></td></tr></table></figure>
+<p>具体可以仔细看<code>my_mod::nested::public_function_in_my_mod();</code></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Hanhan
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://llittlehanhan.github.io/2024/03/rust/rust(%E4%B8%83)%E9%A1%B9%E7%9B%AE%E3%80%81%E5%8C%85%E3%80%81%E6%A8%A1%E5%9D%97/" title="rust(七)项目、包、模块">https://llittlehanhan.github.io/2024/03/rust/rust(七)项目、包、模块/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/rust/" rel="tag"><i class="fa fa-tag"></i> rust</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/03/rust/rust(%E5%85%AB)%E6%B5%8B%E8%AF%95/" rel="prev" title="rust(八)测试">
+      <i class="fa fa-chevron-left"></i> rust(八)测试
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/03/rust/rust(%E5%8D%81)%E9%97%AD%E5%8C%85/" rel="next" title="rust(十)闭包">
+      rust(十)闭包 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#package"><span class="nav-number">1.</span> <span class="nav-text">package</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#crate"><span class="nav-number">2.</span> <span class="nav-text">crate</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#module"><span class="nav-number">3.</span> <span class="nav-text">module</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%92%8Cmodule"><span class="nav-number">4.</span> <span class="nav-text">文件和module</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#use"><span class="nav-number">5.</span> <span class="nav-text">use</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8use%E7%9A%84%E5%8F%AF%E8%A7%81%E6%80%A7%E9%97%AE%E9%A2%98"><span class="nav-number">6.</span> <span class="nav-text">使用use的可见性问题</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Hanhan"
+      src="/images/me.jpg">
+  <p class="site-author-name" itemprop="name">Hanhan</p>
+  <div class="site-description" itemprop="description">凡是过往，皆为序章</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">60</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LLittleHanhan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LLittleHanhan" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hanhan</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">23k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:24</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

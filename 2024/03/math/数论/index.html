@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"llittlehanhan.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":"fasle","scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="这部分是与数论相关的内容">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数论">
+<meta property="og:url" content="https://llittlehanhan.github.io/2024/03/math/%E6%95%B0%E8%AE%BA/index.html">
+<meta property="og:site_name" content="Hanhan&#39;s Blog">
+<meta property="og:description" content="这部分是与数论相关的内容">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-03-11T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-04-03T07:40:53.383Z">
+<meta property="article:author" content="Hanhan">
+<meta property="article:tag" content="math">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://llittlehanhan.github.io/2024/03/math/%E6%95%B0%E8%AE%BA/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>数论 | Hanhan's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hanhan's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">11</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">60</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://llittlehanhan.github.io/2024/03/math/%E6%95%B0%E8%AE%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/me.jpg">
+      <meta itemprop="name" content="Hanhan">
+      <meta itemprop="description" content="凡是过往，皆为序章">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hanhan's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数论
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-03-12 00:00:00" itemprop="dateCreated datePublished" datetime="2024-03-12T00:00:00+08:00">2024-03-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-04-03 15:40:53" itemprop="dateModified" datetime="2024-04-03T15:40:53+08:00">2024-04-03</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>这部分是与数论相关的内容</p>
+<span id="more"></span>
+
+<h2 id="整除性"><a href="#整除性" class="headerlink" title="整除性"></a>整除性</h2><p>$b|a \Leftrightarrow a&#x3D;qb，q \in Z$</p>
+<ol>
+<li>意义：b是a的因子</li>
+<li>虽然是叫“整除性”，但描述的还是乘法,因此b可以为0</li>
+<li>一些推论很简单，不写了</li>
+</ol>
+<h2 id="素数"><a href="#素数" class="headerlink" title="素数"></a>素数</h2><p>引理</p>
+<ol>
+<li>任何大于1的整数必有素因子</li>
+<li>任何一个合数都有一个不超过$\sqrt{n}$的素因子<ul>
+<li>反过来，所有素数$p \leq \sqrt{n}$都不能整除$n$，则$n$是素数</li>
+</ul>
+</li>
+<li>算术基本定理：$n&#x3D; \pm p_1^{e_1}…p_r^{e_r}$，$p$为素数，表示唯一</li>
+<li>欧几里德定理：素数有无穷多个</li>
+</ol>
+<h2 id="最大公约数"><a href="#最大公约数" class="headerlink" title="最大公约数"></a>最大公约数</h2><p>算法：欧几里德算法（辗转相除法）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(b==<span class="number">0</span>) </span><br><span class="line">    <span class="built_in">gcd</span>(a,b) = a;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="built_in">gcd</span>(a,b) = <span class="built_in">gcd</span>(b,r);<span class="comment">//r=a%b</span></span><br><span class="line"><span class="comment">//why? a=b*q+r 因此假设m是a和b的因子,那么m一定是r的因子</span></span><br></pre></td></tr></table></figure>
+<p>算法：扩展欧几里德算法$as+bt&#x3D;gcd(a,b)$</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">a=r0 b=r1</span><br><span class="line">r0=r1*q1+r2</span><br><span class="line">r1=r2*q2+r3</span><br><span class="line">...</span><br><span class="line">rn<span class="number">-1</span>=rn*qn</span><br><span class="line"></span><br><span class="line">s0=<span class="number">1</span> s1=<span class="number">0</span> t0=<span class="number">0</span> t1=<span class="number">1</span></span><br><span class="line">s_i+<span class="number">1</span>=s_i<span class="number">-1</span>-s_i*q_i</span><br><span class="line">t_i+<span class="number">1</span>=t_i<span class="number">-1</span>-t_i*q_i</span><br><span class="line">a*s_i+b*t_i=r_i</span><br></pre></td></tr></table></figure>
+
+<h2 id="最小公倍数"><a href="#最小公倍数" class="headerlink" title="最小公倍数"></a>最小公倍数</h2><p>算法：$lcm(a,b)&#x3D;\frac{a*b}{gcd(a,b)}$<br>算法：迭代加,这个明显在计算机计算会简单的多</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">8+   16   16+  24</span><br><span class="line">12   12+  24   24</span><br></pre></td></tr></table></figure>
+
+<h2 id="模运算"><a href="#模运算" class="headerlink" title="模运算"></a>模运算</h2><p>基本运算规则<br>$(a+b)\mod p &#x3D; (a \mod p + b \mod p) \mod p$<br>$(a-b)\mod p &#x3D; (a \mod p - b \mod p) \mod p$<br>$(a \times b)\mod p &#x3D; (a \mod p \times b \mod p) \mod p$</p>
+<h2 id="同余"><a href="#同余" class="headerlink" title="同余"></a>同余</h2><ol>
+<li>有集合S，定义在S上的二元关系R，有以下性质，称为<strong>等价关系</strong><ul>
+<li>自反性</li>
+<li>对称性</li>
+<li>传递性</li>
+</ul>
+</li>
+<li><strong>同余关系</strong> $a \equiv b \pmod n \Leftrightarrow n|(a-b)$，其中$n$为正整数，注意哈，同余是一种关系</li>
+<li>同余的运算法则若$a \equiv b \pmod n$<br>$a+m \equiv b+m \pmod n$<br>$a-m \equiv b-m \pmod n$<br>$a \times m \equiv b \times m \pmod n$<br>$a^m \equiv b^m \pmod n$</li>
+</ol>
+<h2 id="乘法逆元（倒数）"><a href="#乘法逆元（倒数）" class="headerlink" title="乘法逆元（倒数）"></a>乘法逆元（倒数）</h2><p>$ab \equiv 1 \pmod n$则a，b互为逆元</p>
+<ol>
+<li>只考虑n以内的数</li>
+<li>$逆元存在 \Leftrightarrow gcd(a,n)&#x3D;1$</li>
+</ol>
+<p>算法：扩展欧几里德算法求逆元$as+nt&#x3D;gcd(a,n)&#x3D;1$，将上述等式模$n$有$as \equiv 1 \pmod n$</p>
+<h2 id="一次同余方程"><a href="#一次同余方程" class="headerlink" title="一次同余方程"></a>一次同余方程</h2><ol>
+<li>消去律 若$gcd(a,n)&#x3D;d$，有$az \equiv az’ \pmod n \Rightarrow z \equiv z’ \pmod {n&#x2F;d}$</li>
+<li>有解的条件，若$gcd(a,n)&#x3D;d$，则$ax \equiv b \pmod n \Leftrightarrow d|b$，这里可以分下类$d$是否等于1</li>
+</ol>
+<h2 id="剩余类"><a href="#剩余类" class="headerlink" title="剩余类"></a>剩余类</h2><p>$Z_n &#x3D; {[0],[1]…[n-1]} $</p>
+<h2 id="中国剩余定理CRT——解一次同余方程组"><a href="#中国剩余定理CRT——解一次同余方程组" class="headerlink" title="中国剩余定理CRT——解一次同余方程组"></a>中国剩余定理CRT——解一次同余方程组</h2><p>设两两互素的模数$n_1,n_2…,n_m$，以及任意的整数$a_1,a_2…,a_m$，设$n&#x3D;\prod_{i&#x3D;0}^{m}n_i$，方程组<br>$$<br>\begin{cases}<br>x \equiv a_1 \pmod {n_1}\<br>x \equiv a_2 \pmod {n_2}\<br>…\<br>x \equiv a_m \pmod {n_m}<br>\end{cases}<br>$$<br>必有解$a$，且有解$a’ \Leftrightarrow a \equiv a’ \pmod n$<br>证明：<br>$n_i^* &#x3D; \frac{n}{n_i}$<br>$gcd(n_i^*,n_i)&#x3D;1$<br>$n_i^{<em>-1}<em>n_i^</em> \equiv 1 \pmod {n_i}$<br>$n_i^{</em>-1}<em>n_i^</em> \equiv 0 \pmod {n_j} j \neq i$<br>$a&#x3D;\sum_{i&#x3D;1}^{m}n_i^{*-1}*n_i^**a_i$ </p>
+<h2 id="欧拉函数——求与模数互素的数的个数（模数以内）"><a href="#欧拉函数——求与模数互素的数的个数（模数以内）" class="headerlink" title="欧拉函数——求与模数互素的数的个数（模数以内）"></a>欧拉函数——求与模数互素的数的个数（模数以内）</h2><p>$Z_n^*&#x3D;{Z_n中有乘法逆元的剩余类 }$<br>$对于所有正整数n，定义欧拉函数 \Phi(n) &#x3D; |Z_n^*|，且令\Phi(1)&#x3D;1$<br>性质</p>
+<ol>
+<li>$设两两互素的正整数n_1,…n_m，并设n&#x3D; \prod_{i&#x3D;1}^{m}n_i，有 \Phi(n)&#x3D;\prod_{i&#x3D;1}^{m} \Phi(n_i)$</li>
+<li>$\Phi(p^k)&#x3D;p^{k-1}\Phi(p)$</li>
+<li>$\Phi(p)&#x3D;p-1$</li>
+</ol>
+<h2 id="欧拉定理，费马小定理——模运算下的乘方"><a href="#欧拉定理，费马小定理——模运算下的乘方" class="headerlink" title="欧拉定理，费马小定理——模运算下的乘方"></a>欧拉定理，费马小定理——模运算下的乘方</h2><p>$a \in Z_n^*，使a^k \equiv 1 \pmod n称k为a在模n下的乘法阶$</p>
+<ol>
+<li><p>$a^0,a^1,…,a^{k-1}互不相同$</p>
+</li>
+<li><p>$欧拉定理：a \in Z_n^*，a^{\Phi(n)} \equiv 1 \pmod n,k|\Phi(n)$</p>
+<blockquote>
+<p>注意这里的a的条件，模n乘法群的集合是由0到n-1之间与n互素的所有整数构成</p>
+</blockquote>
+</li>
+<li><p>$费马小定理：对于任意的素数p和整数a \in Z_p，a^p \equiv a \pmod p$</p>
+</li>
+<li><p>$定理：a在模n下的乘法阶为k，则a^m在模n下的乘法阶为\frac{k}{gcd(m,k)}$</p>
+</li>
+</ol>
+<h2 id="二次剩余"><a href="#二次剩余" class="headerlink" title="二次剩余"></a>二次剩余</h2><p>$(Z_n^*)^2 &#x3D; { b^2 | b \in Z_n^*}$</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Hanhan
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://llittlehanhan.github.io/2024/03/math/%E6%95%B0%E8%AE%BA/" title="数论">https://llittlehanhan.github.io/2024/03/math/数论/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/math/" rel="tag"><i class="fa fa-tag"></i> math</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/03/rust/rust(%E4%B9%9D)%E5%BE%AA%E7%8E%AF%E5%92%8CIterator/" rel="prev" title="rust(九)循环和Iterator">
+      <i class="fa fa-chevron-left"></i> rust(九)循环和Iterator
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/03/gpu/cuda_opt/reduce/" rel="next" title="cuda reduce">
+      cuda reduce <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E9%99%A4%E6%80%A7"><span class="nav-number">1.</span> <span class="nav-text">整除性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B4%A0%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">素数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E5%A4%A7%E5%85%AC%E7%BA%A6%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">最大公约数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E5%B0%8F%E5%85%AC%E5%80%8D%E6%95%B0"><span class="nav-number">4.</span> <span class="nav-text">最小公倍数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E8%BF%90%E7%AE%97"><span class="nav-number">5.</span> <span class="nav-text">模运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8C%E4%BD%99"><span class="nav-number">6.</span> <span class="nav-text">同余</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%98%E6%B3%95%E9%80%86%E5%85%83%EF%BC%88%E5%80%92%E6%95%B0%EF%BC%89"><span class="nav-number">7.</span> <span class="nav-text">乘法逆元（倒数）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E6%AC%A1%E5%90%8C%E4%BD%99%E6%96%B9%E7%A8%8B"><span class="nav-number">8.</span> <span class="nav-text">一次同余方程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%A9%E4%BD%99%E7%B1%BB"><span class="nav-number">9.</span> <span class="nav-text">剩余类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AD%E5%9B%BD%E5%89%A9%E4%BD%99%E5%AE%9A%E7%90%86CRT%E2%80%94%E2%80%94%E8%A7%A3%E4%B8%80%E6%AC%A1%E5%90%8C%E4%BD%99%E6%96%B9%E7%A8%8B%E7%BB%84"><span class="nav-number">10.</span> <span class="nav-text">中国剩余定理CRT——解一次同余方程组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AC%A7%E6%8B%89%E5%87%BD%E6%95%B0%E2%80%94%E2%80%94%E6%B1%82%E4%B8%8E%E6%A8%A1%E6%95%B0%E4%BA%92%E7%B4%A0%E7%9A%84%E6%95%B0%E7%9A%84%E4%B8%AA%E6%95%B0%EF%BC%88%E6%A8%A1%E6%95%B0%E4%BB%A5%E5%86%85%EF%BC%89"><span class="nav-number">11.</span> <span class="nav-text">欧拉函数——求与模数互素的数的个数（模数以内）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AC%A7%E6%8B%89%E5%AE%9A%E7%90%86%EF%BC%8C%E8%B4%B9%E9%A9%AC%E5%B0%8F%E5%AE%9A%E7%90%86%E2%80%94%E2%80%94%E6%A8%A1%E8%BF%90%E7%AE%97%E4%B8%8B%E7%9A%84%E4%B9%98%E6%96%B9"><span class="nav-number">12.</span> <span class="nav-text">欧拉定理，费马小定理——模运算下的乘方</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E6%AC%A1%E5%89%A9%E4%BD%99"><span class="nav-number">13.</span> <span class="nav-text">二次剩余</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Hanhan"
+      src="/images/me.jpg">
+  <p class="site-author-name" itemprop="name">Hanhan</p>
+  <div class="site-description" itemprop="description">凡是过往，皆为序章</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">60</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LLittleHanhan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LLittleHanhan" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hanhan</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">23k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:24</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
